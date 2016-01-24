@@ -1,0 +1,62 @@
+    >>> from rcu import *
+
+Initialize an RCUMutableMapping.
+    >>> x = RCUMutableMapping()
+
+Make sure that the RCU algorithm is working for addition.
+    >>> pre_address = id(x.items)
+    >>> x[1] = 2
+    >>> post_address = id(x.items)
+    >>> pre_address != post_address
+    True
+    >>> x[2] = 3
+    >>> x
+    RCUMutableMapping(size=None, items=OrderedDict([(1, 2), (2, 3)]))
+
+Initialize an RCUMutableMapping object with initial objects.
+    >>> x = RCUMutableMapping(items={ 1:2, 2:3 })
+    >>> x
+    RCUMutableMapping(size=None, items=OrderedDict([(1, 2), (2, 3)]))
+
+Clear out all the items and make sure the RCU algorithm is working.
+    >>> pre_address = id(x.items)
+    >>> x.clear()
+    >>> post_address = id(x.items)
+    >>> pre_address != post_address
+    True
+    >>> len(x.items)
+    0
+
+Make sure that the object is immutable and cannot be extended.
+    >>> x.foo = 'foo'
+    Traceback (most recent call last):
+    ...
+    TypeError: RCUMutableMapping is immutable
+
+Make sure that the tests for membership is disabled.
+    >>> x[1] = 2
+    >>> 1 in x #doctest:+IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+    ...
+    TypeError
+
+Test pop().
+    >>> pre_address = id(x.items)
+    >>> x.pop(1)
+    2
+    >>> post_address = id(x.items)
+    >>> pre_address != post_address
+    True
+
+Test popitem().
+    >>> x[1] = 2
+    >>> x[2] = 3
+    >>> pre_address = id(x.items)
+    >>> x.popitem(last=False)
+    (1, 2)
+    >>> post_address = id(x.items)
+    >>> pre_address != post_address
+    True
+    >>> x[1] = 2
+    >>> x.popitem()
+    (1, 2)
