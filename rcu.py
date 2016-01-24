@@ -117,3 +117,21 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
                     temp_items.popitem(last=False)
             self._setattr('items', temp_items)
         # pylint: enable=no-member
+
+    def popitem(self, last=True):
+        # pylint: disable=no-member
+        with self.modification_guard:
+            temp_items = OrderedDict(self.items)
+            retval = temp_items.popitem(last=last)
+            self._setattr('items', temp_items)
+            return retval
+        # pylint: enable=no-member
+
+    def pop(self, *args, **kwargs):
+        # pylint: disable=no-member
+        with self.modification_guard:
+            temp_items = OrderedDict(self.items)
+            retval = temp_items.pop(*args, **kwargs)
+            self._setattr('items', temp_items)
+            return retval
+        # pylint: enable=no-member
