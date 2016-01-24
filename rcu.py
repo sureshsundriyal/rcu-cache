@@ -6,6 +6,7 @@ __version__ = '0.0.1'
 
 from threading import Lock
 from collections import OrderedDict
+from itertools import repeat
 
 __all__ = ['RCUMutableMapping']
 
@@ -105,3 +106,14 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
         Create a copy of the object
         '''
         return self.__class__(self.size, self.items) # pylint: disable=no-member
+
+    def update(self, *args, **kwargs):
+        # pylint: disable=no-member
+        with self.modification_guard:
+            temp_items = OrderedDict(self.items)
+            temp_items.update(*args, **kwargs)
+            if self.size and len(temp_items) > self.size:
+                for _ in repeat(None, (len(temp_items) - self.size)):
+                    temp_items.popitem(last=False)
+            self._setattr('items', temp_items)
+        # pylint: enable=no-member
