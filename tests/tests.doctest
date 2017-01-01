@@ -61,7 +61,7 @@ Make sure that the tests for membership is disabled.
     >>> 1 in x #doctest:+IGNORE_EXCEPTION_DETAIL
     Traceback (most recent call last):
     ...
-    TypeError
+    TypeError: Directly access the RCUCache members to test for membership.
 
 Test pop().
     >>> pre_address = id(x.odict)
