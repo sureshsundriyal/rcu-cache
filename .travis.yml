@@ -13,4 +13,4 @@ python:
   - "pypy-5.3.1"
 # command to run tests
 script:
-  - python -m doctest tests/tests.doctest
+  - pushd tests >/dev/null && ./runtests.sh && popd >/dev/null
