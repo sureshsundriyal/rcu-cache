@@ -47,7 +47,7 @@ Clear out all the items and make sure the RCU algorithm is working.
     >>> post_address = id(x.odict)
     >>> pre_address != post_address
     True
-    >>> len(x.odict)
+    >>> len(x)
     0
 
 Make sure that the object is immutable and cannot be extended.
@@ -107,9 +107,13 @@ Update with more elements than possible in the list.
     >>> x
     RCUCache(maxsize=2, items=OrderedDict([(7, 8), (9, 10)]))
 
-Check for maxsize of the object.
+Make sure that the maxsize is honored.
     >>> len(x)
     2
+
+Make sure len(x) returns the length of the encapsulated OrderedDict.
+    >>> len(x) == len(x.odict)
+    True
 
 Test multi-threaded insertion/eviction
     >>> import threading
