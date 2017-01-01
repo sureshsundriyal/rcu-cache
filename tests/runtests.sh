@@ -1,3 +1,6 @@
 #!/bin/sh
 
-PYTHONPATH=../ python -m doctest ./tests.doctest
+export PYTHONPATH=../
+python -m doctest ./tests.doctest
+python -m doctest ../Readme.md
+
