@@ -64,8 +64,7 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
                         % (self.__class__.__name__,))
 
     def __getitem__(self, key):
-        tempRef = self.items # pylint: disable=no-members
-        return tempRef[key]
+        return self.items[key] # pylint: disable=no-members
 
     def __setitem__(self, key, value):
         # pylint: disable=no-member
@@ -90,6 +89,9 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
         return '%s(size=%s, items=%r)' % (self.__class__.__name__,
                                           self.size, self.items)
         # pylint: enable=no-member
+
+    def __len__(self):
+        return len(self.items)
 
     def clear(self):
         '''

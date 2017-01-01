@@ -106,3 +106,7 @@ Update with more elements than possible in the list.
     >>> x.update(y)
     >>> x
     RCUCache(size=2, items=OrderedDict([(7, 8), (9, 10)]))
+
+Check for size of the object.
+    >>> len(x)
+    2
