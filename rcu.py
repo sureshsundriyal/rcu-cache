@@ -16,7 +16,7 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
     '''
 
     # The following makes the object unextendable.
-    __slots__ = ('size', 'items', 'modification_guard', '_setattr')
+    __slots__ = ('maxsize', 'items', 'modification_guard', '_setattr')
 
     # The following values cannot be pickled.
     _unpicklable = set(['modification_guard', '_setattr'])
@@ -27,14 +27,14 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
 
     __delattr__ = __setattr__
 
-    def __init__(self, size=None, items=None):
+    def __init__(self, maxsize=None, items=None):
         if items is None:
             items = []
         super(self.__class__,
               self).__setattr__('_setattr',
                                 super(self.__class__, self).__setattr__)
         # pylint: disable=no-member
-        self._setattr('size', size)
+        self._setattr('maxsize', maxsize)
         self._setattr('items', OrderedDict(items))
         self._setattr('modification_guard', Lock())
         # pylint: enable=no-member
@@ -70,7 +70,7 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
         # pylint: disable=no-member
         with self.modification_guard:
             temp_items = OrderedDict(self.items)
-            if self.size and len(self.items) == self.size:
+            if self.maxsize and len(self.items) == self.maxsize:
                 temp_items.popitem(last=False)
             temp_items[key] = value
             self._setattr('items', temp_items)
@@ -86,8 +86,8 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
 
     def __repr__(self):
         # pylint: disable=no-member
-        return '%s(size=%s, items=%r)' % (self.__class__.__name__,
-                                          self.size, self.items)
+        return '%s(maxsize=%s, items=%r)' % (self.__class__.__name__,
+                                          self.maxsize, self.items)
         # pylint: enable=no-member
 
     def __len__(self):
@@ -106,15 +106,15 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
         '''
         Create a copy of the object
         '''
-        return self.__class__(self.size, self.items) # pylint: disable=no-member
+        return self.__class__(self.maxsize, self.items) # pylint: disable=no-member
 
     def update(self, *args, **kwargs):
         # pylint: disable=no-member
         with self.modification_guard:
             temp_items = OrderedDict(self.items)
             temp_items.update(*args, **kwargs)
-            if self.size and len(temp_items) > self.size:
-                for _ in repeat(None, (len(temp_items) - self.size)):
+            if self.maxsize and len(temp_items) > self.maxsize:
+                for _ in repeat(None, (len(temp_items) - self.maxsize)):
                     temp_items.popitem(last=False)
             self._setattr('items', temp_items)
         # pylint: enable=no-member
