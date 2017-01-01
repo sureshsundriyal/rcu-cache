@@ -44,25 +44,25 @@ Example:
 In addition to the above methods, the **RCUCache** object also has the
 following methods:
 
-* ``clear()```
+* `clear()`
   Remove all items from the cache.
 
-* ```copy()```
+* `copy()`
   Returns a shallow copy of the cache.
 
-* ```items()```
+* `items()`
   Returns the dictionary's items ((key, value) pairs).
 
-* ```popitem(last=True)```
+* `popitem(last=True)`
   The `popitem()` method for ordered dictionaries returns and removes a (key,
   value) pair. The pairs are returned in LIFO order if last is true or FIFO
   order if false.
 
-* ```pop(key[, default])```
+* `pop(key[, default])`
   If key is in the dictionary, remove it and return its value, else return
   default. If default is not given and key is not in the dictionary, a KeyError
   is raised.
 
-* ```update([other])```
+* `update([other])`
   Update the dictionary with the key/value pairs from other, overwriting
   existing keys. The `maxsize` is honored during an update.
