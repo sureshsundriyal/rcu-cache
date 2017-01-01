@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sureshsundriyal/rcu-cache.svg?branch=master)](https://travis-ci.org/sureshsundriyal/rcu-cache)
+
 rcu-cache
 =========
 
