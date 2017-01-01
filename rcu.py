@@ -64,8 +64,8 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
                         % (self.__class__.__name__,))
 
     def __getitem__(self, key):
-        tempRef = self.items
-        return tempRef[key] # pylint: disable=no-member
+        tempRef = self.items # pylint: disable=no-members
+        return tempRef[key]
 
     def __setitem__(self, key, value):
         # pylint: disable=no-member
