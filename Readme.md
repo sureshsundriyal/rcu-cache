@@ -1,7 +1,7 @@
-rcu-python
-==========
+rcu-cache
+=========
 
-The **rcu-python** module implements a multi-producer, multi-consumer
+The **rcu** module implements a multi-producer, multi-consumer
 thread-safe FIFO cache modeled after an OrderedDict. The object features
 lock-less reads and the writes are guarded by a lock leading to fast reads and
 thread-safe writes.
@@ -41,7 +41,7 @@ Example:
 
 ```
 
-In addition to the above methods, the **RCUCache** object also features the
+In addition to the above methods, the **RCUCache** object also has the
 following methods:
 
 * ```clear()```
