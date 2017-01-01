@@ -8,7 +8,7 @@ thread-safe FIFO cache modeled after an OrderedDict. The object features
 lock-less reads and the writes are guarded by a lock leading to fast reads and
 thread-safe writes.
 
-The library is Python2/3 compatible.
+The module works with Python 2.7+/3.2+.
 
 Example:
 --------
