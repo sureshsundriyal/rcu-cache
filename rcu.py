@@ -23,7 +23,7 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
 
     def __setattr__(self, *args, **kwargs):
         # Override __setattr__ to make the object itself immutable.
-        raise TypeError('%s is immutable' % (self.__class__.__name__,))
+        raise TypeError('%s is immutable' % self.__class__.__name__)
 
     __delattr__ = __setattr__
 
@@ -61,10 +61,10 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
         inherently a race condition.
         '''
         raise TypeError("Directly access the %s members to test for membership"
-                        % (self.__class__.__name__,))
+                        % self.__class__.__name__)
 
     def __getitem__(self, key):
-        return self.items[key] # pylint: disable=no-members
+        return self.items[key] # pylint: disable=no-member
 
     def __setitem__(self, key, value):
         # pylint: disable=no-member
@@ -91,7 +91,7 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
         # pylint: enable=no-member
 
     def __len__(self):
-        return len(self.items)
+        return len(self.items) # pylint: disable=no-member
 
     def clear(self):
         '''
