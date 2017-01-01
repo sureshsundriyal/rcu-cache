@@ -1,7 +1,7 @@
     >>> from rcu import *
 
-Initialize an RCUMutableMapping.
-    >>> x = RCUMutableMapping()
+Initialize an RCUCache.
+    >>> x = RCUCache()
 
 Make sure that the RCU algorithm is working for addition.
     >>> pre_address = id(x.items)
@@ -11,35 +11,35 @@ Make sure that the RCU algorithm is working for addition.
     True
     >>> x[2] = 3
     >>> x
-    RCUMutableMapping(size=None, items=OrderedDict([(1, 2), (2, 3)]))
+    RCUCache(size=None, items=OrderedDict([(1, 2), (2, 3)]))
     >>> x[2]
     3
 
 Make sure deletion of elements works fine.
     >>> del x[2]
     >>> x
-    RCUMutableMapping(size=None, items=OrderedDict([(1, 2)]))
+    RCUCache(size=None, items=OrderedDict([(1, 2)]))
 
 Make sure copy works fine.
     >>> y = x.copy()
     >>> y
-    RCUMutableMapping(size=None, items=OrderedDict([(1, 2)]))
+    RCUCache(size=None, items=OrderedDict([(1, 2)]))
 
 Make sure we can pickle/unpickle the objects.
     >>> import pickle
     >>> z = pickle.dumps(y)
     >>> pickle.loads(z)
-    RCUMutableMapping(size=None, items=OrderedDict([(1, 2)]))
+    RCUCache(size=None, items=OrderedDict([(1, 2)]))
 
 Update the object.
     >>> y.update({ 1:4, 5:6 })
     >>> y
-    RCUMutableMapping(size=None, items=OrderedDict([(1, 4), (5, 6)]))
+    RCUCache(size=None, items=OrderedDict([(1, 4), (5, 6)]))
 
-Initialize an RCUMutableMapping object with initial objects.
-    >>> x = RCUMutableMapping(items={ 1:2, 2:3 })
+Initialize an RCUCache object with initial objects.
+    >>> x = RCUCache(items={ 1:2, 2:3 })
     >>> x
-    RCUMutableMapping(size=None, items=OrderedDict([(1, 2), (2, 3)]))
+    RCUCache(size=None, items=OrderedDict([(1, 2), (2, 3)]))
 
 Clear out all the items and make sure the RCU algorithm is working.
     >>> pre_address = id(x.items)
@@ -54,7 +54,7 @@ Make sure that the object is immutable and cannot be extended.
     >>> x.foo = 'foo'
     Traceback (most recent call last):
     ...
-    TypeError: RCUMutableMapping is immutable
+    TypeError: RCUCache is immutable
 
 Make sure that the tests for membership is disabled.
     >>> x[1] = 2
@@ -85,16 +85,16 @@ Test popitem().
     (1, 2)
 
 Test the RCU eviction.
-    >>> x = RCUMutableMapping(size=2)
+    >>> x = RCUCache(size=2)
     >>> x[2] = 1
     >>> x[3] = 4
     >>> x
-    RCUMutableMapping(size=2, items=OrderedDict([(2, 1), (3, 4)]))
+    RCUCache(size=2, items=OrderedDict([(2, 1), (3, 4)]))
 
 Now add another element and make sure one of them gets evicted.
     >>> x[5] = 6
     >>> x
-    RCUMutableMapping(size=2, items=OrderedDict([(3, 4), (5, 6)]))
+    RCUCache(size=2, items=OrderedDict([(3, 4), (5, 6)]))
 
 Update with more elements than possible in the list.
     >>> from collections import OrderedDict
@@ -105,4 +105,4 @@ Update with more elements than possible in the list.
     >>> y[9] = 10
     >>> x.update(y)
     >>> x
-    RCUMutableMapping(size=2, items=OrderedDict([(7, 8), (9, 10)]))
+    RCUCache(size=2, items=OrderedDict([(7, 8), (9, 10)]))

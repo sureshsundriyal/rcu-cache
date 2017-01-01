@@ -8,9 +8,9 @@ from threading import Lock
 from collections import OrderedDict
 from itertools import repeat
 
-__all__ = ['RCUMutableMapping']
+__all__ = ['RCUCache']
 
-class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
+class RCUCache(object): # pylint: disable=too-few-public-methods
     '''
     TODO: Put in the class documentation.
     '''
@@ -30,9 +30,9 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
     def __init__(self, size=None, items=None):
         if items is None:
             items = []
-        super(RCUMutableMapping,
+        super(self.__class__,
               self).__setattr__('_setattr',
-                                super(RCUMutableMapping, self).__setattr__)
+                                super(self.__class__, self).__setattr__)
         # pylint: disable=no-member
         self._setattr('size', size)
         self._setattr('items', OrderedDict(items))
@@ -46,9 +46,9 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
         return state
 
     def __setstate__(self, state):
-        super(RCUMutableMapping,
+        super(self.__class__,
               self).__setattr__('_setattr',
-                                super(RCUMutableMapping, self).__setattr__)
+                                super(self.__class__, self).__setattr__)
         # pylint: disable=no-member
         self._setattr('modification_guard', Lock())
         for var in state:
