@@ -44,7 +44,7 @@ Example:
 In addition to the above methods, the **RCUCache** object also has the
 following methods:
 
-* ```clear()```
+* ``clear()```
   Remove all items from the cache.
 
 * ```copy()```
