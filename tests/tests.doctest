@@ -110,3 +110,30 @@ Update with more elements than possible in the list.
 Check for size of the object.
     >>> len(x)
     2
+
+Test multi-threaded insertion/eviction
+    >>> import threading
+
+    >>> cache = RCUCache(size=10)
+
+    >>> def add_worker(step=0):
+    ...     for i in range(step, 10000):
+    ...        cache[i] = i
+
+    >>> threads = []
+    >>> for i in range(3):
+    ...     # Make sure that at least two of them are starting with the same
+    ...     # offset.
+    ...     t = threading.Thread(target=add_worker, args=(i if i<2 else 0,))
+    ...     threads.append(t)
+    ...     t.start()
+
+    >>> for t in threads:
+    ...     t.join()
+
+    >>> len(cache)
+    10
+    >>> cache # doctest: +NORMALIZE_WHITESPACE
+    RCUCache(size=10, items=OrderedDict([(9990, 9990), (9991, 9991),
+    (9992, 9992), (9993, 9993), (9994, 9994), (9995, 9995), (9996, 9996),
+    (9997, 9997), (9998, 9998), (9999, 9999)]))
