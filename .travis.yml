@@ -16,4 +16,4 @@ install:
 script:
   - pushd tests >/dev/null && ./runtests.sh && ./coverage.sh && popd >/dev/null
 after_success:
-  - coveralls
+  - pushd tests >/dev/null && coveralls && popd >/dev/null
