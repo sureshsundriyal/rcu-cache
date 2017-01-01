@@ -11,6 +11,11 @@ python:
   - "pypy"
   - "pypy3" # Pypy3 2.4.0
   - "pypy-5.3.1"
+install:
+  - pip install coverage
+  - pip install coveralls
 # command to run tests
 script:
-  - pushd tests >/dev/null && ./runtests.sh && popd >/dev/null
+  - pushd tests >/dev/null && ./runtests.sh && ./coverage.sh && popd >/dev/null
+after_success:
+  - coveralls
