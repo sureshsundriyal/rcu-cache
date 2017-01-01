@@ -136,3 +136,11 @@ class RCUCache(object): # pylint: disable=too-few-public-methods
             self._setattr('items', temp_items)
             return retval
         # pylint: enable=no-member
+
+    def items(self, *args, **kwargs):
+        tempRef = self.items
+        return items(tempRef)
+
+    def __iter__(self, *args, **kwargs):
+        tempRef = self.items
+        return iter(tempRef)

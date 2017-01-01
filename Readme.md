@@ -29,10 +29,8 @@ Example:
    >>> len(cache)
    2
 
-# The object deliberately does not feature a getter method, since checking for
-# the existence of an element and then accessing that element is inherently a
-# race condition. Simply access the element and catch the `KeyError` if you need
-# to test for membership.
+# Simply access the element and catch the `KeyError` if you need to test for
+# membership.
    >>> try:
    ...     cache[20]
    ... except KeyError as e:
@@ -49,6 +47,9 @@ following methods:
 
 * ```copy()```
   Returns a shallow copy of the cache.
+
+* ```items()```
+  Returns the dictionary's items ((key, value) pairs).
 
 * ```popitem(last=True)```
   The `popitem()` method for ordered dictionaries returns and removes a (key,
