@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/sureshsundriyal/rcu-cache.svg?branch=master)](https://travis-ci.org/sureshsundriyal/rcu-cache)
+[![Coverage Status](https://coveralls.io/repos/github/sureshsundriyal/rcu-cache/badge.svg?branch=master)](https://coveralls.io/github/sureshsundriyal/rcu-cache?branch=master)
 
 rcu-cache
 =========
