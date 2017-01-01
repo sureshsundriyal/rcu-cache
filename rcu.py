@@ -43,6 +43,7 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
         state = {}
         for var in set(self.__slots__) - self._unpicklable:
             state[var] = getattr(self, var)
+        return state
 
     def __setstate__(self, state):
         super(RCUMutableMapping,
@@ -63,7 +64,8 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
                         % (self.__class__.__name__,))
 
     def __getitem__(self, key):
-        return self.items[key] # pylint: disable=no-member
+        tempRef = self.items
+        return tempRef[key] # pylint: disable=no-member
 
     def __setitem__(self, key, value):
         # pylint: disable=no-member
@@ -85,11 +87,8 @@ class RCUMutableMapping(object): # pylint: disable=too-few-public-methods
 
     def __repr__(self):
         # pylint: disable=no-member
-        if not self:
-            return '%s()' % (self.__class__.__name__,)
-        else:
-            return '%s(size=%s, items=%r)' % (self.__class__.__name__,
-                                              self.size, self.items)
+        return '%s(size=%s, items=%r)' % (self.__class__.__name__,
+                                          self.size, self.items)
         # pylint: enable=no-member
 
     def clear(self):
